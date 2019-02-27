@@ -5,6 +5,8 @@ import ru.avalon.java.dev.ocpjp.labs.core.io.RandomFileReader;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Абстрактное представление о товаре.
@@ -136,7 +138,11 @@ public interface Commodity {
              * 1. Для создания коллекции следует использовать метод 'generate()' класса 'Stream'
              * 2. Для получения коллекции следует использовать метод 'collect()' класса 'Stream'
              */
-            throw new UnsupportedOperationException("Not implemented yet!");
+//            throw new UnsupportedOperationException("Not implemented yet!");
+            Stream<Commodity> stream;
+            stream = Stream.generate(CommodityBuilder::build).limit(limit);
+            Collection<Commodity> list = stream.collect(Collectors.toList());
+            return list;
         }
     }
 
