@@ -119,7 +119,48 @@ public interface Commodity {
          * Созданные реализации случше всего инкапсулировать
          * на уровне пакета.
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+//        throw new UnsupportedOperationException("Not implemented yet!");
+        return new CommodityBuilder() {
+
+            private CommodityImpl dummy = new CommodityImpl();
+
+            @Override
+            public CommodityBuilder code(String code) {
+                dummy.setCode(code);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder vendorCode(String vendorCode) {
+                dummy.setVendorCode(vendorCode);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder name(String name) {
+                dummy.setName(name);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder price(double price) {
+                dummy.setPrice(price);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder residue(int residue) {
+                dummy.setResidue(residue);
+                return this;
+            }
+
+            @Override
+            public Commodity build() {
+                CommodityImpl result = dummy;
+                dummy = new CommodityImpl();
+                return result;
+            }
+        };
     }
 
     /**
@@ -140,7 +181,7 @@ public interface Commodity {
              */
 //            throw new UnsupportedOperationException("Not implemented yet!");
             Stream<Commodity> stream;
-            stream = Stream.generate(CommodityBuilder::build).limit(limit);
+            stream = Stream.generate(Commodity.builder().name(reader.readLine())::build).limit(limit);
             Collection<Commodity> list = stream.collect(Collectors.toList());
             return list;
         }
