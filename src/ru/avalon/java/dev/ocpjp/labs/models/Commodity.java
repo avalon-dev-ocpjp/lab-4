@@ -181,7 +181,13 @@ public interface Commodity {
              */
 //            throw new UnsupportedOperationException("Not implemented yet!");
             Stream<Commodity> stream;
-            stream = Stream.generate(Commodity.builder().name(reader.readLine())::build).limit(limit);
+            stream = Stream.generate(Commodity.builder()
+                                              .code(valueOf(reader.readLine()).getCode())
+                                              .vendorCode(valueOf(reader.readLine()).getVendorCode())
+                                              .name(valueOf(reader.readLine()).getName())
+                                              .price(valueOf(reader.readLine()).getPrice())
+                                              .residue(valueOf(reader.readLine()).getResidue())
+                                     ::build).limit(limit);                  
             Collection<Commodity> list = stream.collect(Collectors.toList());
             return list;
         }
@@ -200,6 +206,14 @@ public interface Commodity {
          * Реализация метода должна быть основана на формате
          * файла 'resources/household.csv'.
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+//        throw new UnsupportedOperationException("Not implemented yet!");
+        String[] val = string.split(";");
+        return Commodity.builder()
+                .code(val[0])
+                .vendorCode(val[1])
+                .name(val[2])            
+                .residue(Integer.parseInt(val[3]))
+                .price(Double.parseDouble(val[4]))
+                .build();
     }
 }
