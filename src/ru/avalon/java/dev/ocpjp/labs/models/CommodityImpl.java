@@ -10,49 +10,7 @@ package ru.avalon.java.dev.ocpjp.labs.models;
  * @author Victor.Malmygin
  */
 public class CommodityImpl implements Commodity{
-    
-    class CommodityBuilderImpl implements CommodityBuilder{
-        
-        private CommodityImpl dummy = new CommodityImpl();
-
-        @Override
-        public CommodityBuilder code(String code) {
-            dummy.code = code;
-            return this;
-        }
-
-        @Override
-        public CommodityBuilder vendorCode(String vendorCode) {
-            dummy.vendorCode = vendorCode;
-            return this;
-        }
-
-        @Override
-        public CommodityBuilder name(String name) {
-            dummy.name = name;
-            return this;
-        }
-
-        @Override
-        public CommodityBuilder price(double price) {
-            dummy.price = price;
-            return this;
-        }
-
-        @Override
-        public CommodityBuilder residue(int residue) {
-            dummy.residue = residue;
-            return this;
-        }
-
-        @Override
-        public Commodity build() {
-            CommodityImpl result = dummy;
-            dummy = new CommodityImpl();
-            return result;
-        }
-    }
-        
+   
     private String code;
     
     private String vendorCode;
@@ -62,6 +20,26 @@ public class CommodityImpl implements Commodity{
     private double price;
     
     private int residue;
+    
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setVendorCode(String vendorCode) {
+        this.vendorCode = vendorCode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setResidue(int residue) {
+        this.residue = residue;
+    }
 
     @Override
     public String getCode() {
