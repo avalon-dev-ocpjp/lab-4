@@ -5,6 +5,8 @@ import ru.avalon.java.dev.ocpjp.labs.core.io.RandomFileReader;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,7 +121,7 @@ public interface Commodity {
          * Созданные реализации случше всего инкапсулировать
          * на уровне пакета.
          */
-        return null;
+        return new CommodityBuilderBean();
     }
 
     /**
@@ -160,16 +162,31 @@ public interface Commodity {
          * файла 'resources/household.csv'.
          */
 
-        //Код;Артикул;Номенклатура;Остаток;Цена
-
-        String[] arr = string.split(";");
+        /*arr[0]-Код;
+         *arr[1]-Артикул;
+         *arr[2]-Номенклатура;
+         *arr[3]-Остаток;
+         *arr[4]-Цена*/
+        String[] arr = new String[5];
+        String[] str = string.split(";");
+        arr[0] = str[0];
+        arr[1] = str[1];
+        arr[4] = str[str.length - 1];
+        arr[3] = str[str.length - 2];
+        StringBuilder sb = new StringBuilder();
+        for (int i = 2; i < str.length - 2; i++) {
+            if (i != 2) sb.append(";");
+            sb.append(str[i]);
+        }
+        ;
+        arr[2] = sb.toString();
 
         return Commodity
                 .builder()
                 .code(arr[0])
                 .vendorCode(arr[1])
                 .name(arr[2])
-                .residue(Integer.valueOf(arr[3]))
+                .residue(Integer.parseInt(arr[3]))
                 .price(Double.valueOf(arr[4]))
                 .build();
     }
