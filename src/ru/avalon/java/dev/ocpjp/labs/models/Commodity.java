@@ -144,7 +144,8 @@ public interface Commodity {
      * из строки.
      *
      * @param string строка, содержащая данные о товаре
-     * @return экземпляр типа {@link Commodity}
+     * @return экземпляр типа {@link Commodity} или null, если строка
+     * не может быть преобразована в экземпляр типа {@link Commodity}
      */
     static Commodity valueOf(String string) {
         /*
@@ -152,6 +153,18 @@ public interface Commodity {
          * Реализация метода должна быть основана на формате
          * файла 'resources/household.csv'.
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String[] arr = string.split(";");
+        try {
+            return CommodityImpl.builder()
+                    .code(arr[0])
+                    .vendorCode(arr[1])
+                    .name(arr[2])
+                    .residue(Integer.valueOf(arr[3]))
+                    .price(Double.valueOf(arr[4]))
+                    .build();
+        } catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace(System.err);
+            return null;
+        }
     }
 }
