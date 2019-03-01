@@ -5,6 +5,8 @@ import ru.avalon.java.dev.ocpjp.labs.core.io.RandomFileReader;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Абстрактное представление о товаре.
@@ -131,12 +133,9 @@ public interface Commodity {
      */
     static Collection<Commodity> random(int limit) throws IOException {
         try (RandomFileReader reader = RandomFileReader.fromSystemResource("resources/household.csv")) {
-            /*
-             * TODO(Студент): Реализовать создание случайных объектов типа 'Commodity'
-             * 1. Для создания коллекции следует использовать метод 'generate()' класса 'Stream'
-             * 2. Для получения коллекции следует использовать метод 'collect()' класса 'Stream'
-             */
-            throw new UnsupportedOperationException("Not implemented yet!");
+            Stream<String> stringStream = Stream.generate(reader::readLine).limit(limit);
+            Stream<Commodity> commodityStream = stringStream.map(Commodity::valueOf);
+            return commodityStream.collect(Collectors.toSet());
         }
     }
 
