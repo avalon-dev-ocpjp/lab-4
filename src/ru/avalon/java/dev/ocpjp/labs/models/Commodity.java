@@ -101,24 +101,24 @@ public interface Commodity {
         Commodity build();
     }
 
-    /**
-     * Возвращает "Строитель", с использованием которого
-     * можно создавать экземпляры типа {@link Commodity}.
-     *
-     * @return экземпляр типа {@link CommodityBuilder}
-     */
-    static CommodityBuilder builder() {
-        /*
-         * TODO(Студент): Реализовать метод 'builder()' типа 'Commodity'
-         * В рамках задачи потребуется создать реализацию
-         * интерфейса CommodityBuilder, что в свою очередь
-         * потребует создания реализации для интерфейса Commodity.
-         *
-         * Созданные реализации случше всего инкапсулировать
-         * на уровне пакета.
-         */
-        throw new UnsupportedOperationException("Not implemented yet!");
-    }
+//    /**
+//     * Возвращает "Строитель", с использованием которого
+//     * можно создавать экземпляры типа {@link Commodity}.
+//     *
+//     * @return экземпляр типа {@link CommodityBuilder}
+//     */
+//    static CommodityBuilder builder() {
+//        /*
+//         * TODO(Студент): Реализовать метод 'builder()' типа 'Commodity'
+//         * В рамках задачи потребуется создать реализацию
+//         * интерфейса CommodityBuilder, что в свою очередь
+//         * потребует создания реализации для интерфейса Commodity.
+//         *
+//         * Созданные реализации случше всего инкапсулировать
+//         * на уровне пакета.
+//         */
+//        throw new UnsupportedOperationException("Not implemented yet!");
+//    }
 
     /**
      * Выполняет создание заданного количества случайных
