@@ -181,13 +181,7 @@ public interface Commodity {
              */
 //            throw new UnsupportedOperationException("Not implemented yet!");
             Stream<Commodity> stream;
-            stream = Stream.generate(Commodity.builder()
-                                              .code(valueOf(reader.readLine()).getCode())
-                                              .vendorCode(valueOf(reader.readLine()).getVendorCode())
-                                              .name(valueOf(reader.readLine()).getName())
-                                              .price(valueOf(reader.readLine()).getPrice())
-                                              .residue(valueOf(reader.readLine()).getResidue())
-                                     ::build).limit(limit);                  
+            stream = Stream.generate(() -> Commodity.valueOf(reader.readLine())).limit(limit);                  
             Collection<Commodity> list = stream.collect(Collectors.toList());
             return list;
         }
