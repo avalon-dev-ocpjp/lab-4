@@ -5,6 +5,8 @@ import ru.avalon.java.dev.ocpjp.labs.core.io.RandomFileReader;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Абстрактное представление о товаре.
@@ -117,7 +119,48 @@ public interface Commodity {
          * Созданные реализации случше всего инкапсулировать
          * на уровне пакета.
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+//        throw new UnsupportedOperationException("Not implemented yet!");
+        return new CommodityBuilder() {
+
+            private CommodityImpl dummy = new CommodityImpl();
+
+            @Override
+            public CommodityBuilder code(String code) {
+                dummy.setCode(code);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder vendorCode(String vendorCode) {
+                dummy.setVendorCode(vendorCode);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder name(String name) {
+                dummy.setName(name);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder price(double price) {
+                dummy.setPrice(price);
+                return this;
+            }
+
+            @Override
+            public CommodityBuilder residue(int residue) {
+                dummy.setResidue(residue);
+                return this;
+            }
+
+            @Override
+            public Commodity build() {
+                CommodityImpl result = dummy;
+                dummy = new CommodityImpl();
+                return result;
+            }
+        };
     }
 
     /**
@@ -136,7 +179,11 @@ public interface Commodity {
              * 1. Для создания коллекции следует использовать метод 'generate()' класса 'Stream'
              * 2. Для получения коллекции следует использовать метод 'collect()' класса 'Stream'
              */
-            throw new UnsupportedOperationException("Not implemented yet!");
+//            throw new UnsupportedOperationException("Not implemented yet!");
+            Stream<Commodity> stream;
+            stream = Stream.generate(() -> Commodity.valueOf(reader.readLine())).limit(limit);                  
+            Collection<Commodity> list = stream.collect(Collectors.toList());
+            return list;
         }
     }
 
@@ -153,6 +200,14 @@ public interface Commodity {
          * Реализация метода должна быть основана на формате
          * файла 'resources/household.csv'.
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+//        throw new UnsupportedOperationException("Not implemented yet!");
+        String[] val = string.split(";");
+        return Commodity.builder()
+                .code(val[0])
+                .vendorCode(val[1])
+                .name(val[2])            
+                .residue(Integer.parseInt(val[3]))
+                .price(Double.parseDouble(val[4]))
+                .build();
     }
 }
