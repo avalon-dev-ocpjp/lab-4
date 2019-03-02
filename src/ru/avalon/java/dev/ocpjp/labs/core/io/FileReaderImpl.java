@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.IntSummaryStatistics;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -20,13 +22,20 @@ final class FileReaderImpl implements FileReader {
 
     FileReaderImpl(File file) throws IOException {
         stream = new RandomAccessFile(file, "r");
-        IntSummaryStatistics statistics = Stream
-                .generate(this::readLine)
-                .takeWhile(Objects::nonNull)
+//        IntSummaryStatistics statistics = Stream
+//                .generate(this::readLine)
+//                .takeWhile(Objects::nonNull)
+//                .mapToInt(String::length)
+//                .summaryStatistics();
+//        linesCount = (int) statistics.getCount();
+        Path path = file.toPath();
+        linesCount = (int) Files.lines(path)
+                .count();
+//        averageLineSize = (int) statistics.getAverage();
+        averageLineSize = Files.lines(path)
                 .mapToInt(String::length)
-                .summaryStatistics();
-        linesCount = (int) statistics.getCount();
-        averageLineSize = (int) statistics.getAverage();
+                .sum()/linesCount;
+
     }
 
     @Override
