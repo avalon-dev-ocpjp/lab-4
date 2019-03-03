@@ -103,24 +103,15 @@ public interface Commodity {
         Commodity build();
     }
 
-//    /**
-//     * Возвращает "Строитель", с использованием которого
-//     * можно создавать экземпляры типа {@link Commodity}.
-//     *
-//     * @return экземпляр типа {@link CommodityBuilder}
-//     */
-//    static CommodityBuilder builder() {
-//        /*
-//         * TODO(Студент): Реализовать метод 'builder()' типа 'Commodity'
-//         * В рамках задачи потребуется создать реализацию
-//         * интерфейса CommodityBuilder, что в свою очередь
-//         * потребует создания реализации для интерфейса Commodity.
-//         *
-//         * Созданные реализации случше всего инкапсулировать
-//         * на уровне пакета.
-//         */
-//        throw new UnsupportedOperationException("Not implemented yet!");
-//    }
+    /**
+     * Возвращает "Строитель", с использованием которого
+     * можно создавать экземпляры типа {@link Commodity}.
+     *
+     * @return экземпляр типа {@link CommodityBuilder}
+     */
+    static CommodityBuilder builder() {
+        return new CommodityImpl.CommodityBuilderImpl();
+    }
 
     /**
      * Выполняет создание заданного количества случайных
@@ -148,14 +139,9 @@ public interface Commodity {
      * не может быть преобразована в экземпляр типа {@link Commodity}
      */
     static Commodity valueOf(String string) {
-        /*
-         * TODO(Студент): реализовать метод 'parse()' класса 'Commodity'
-         * Реализация метода должна быть основана на формате
-         * файла 'resources/household.csv'.
-         */
         String[] arr = string.split(";");
         try {
-            return CommodityImpl.builder()
+            return Commodity.builder()
                     .code(arr[0])
                     .vendorCode(arr[1])
                     .name(arr[2])

@@ -9,7 +9,7 @@ class CommodityImpl implements Commodity {
      * экземпляры типа {@link Commodity}
      */
     static class CommodityBuilderImpl implements CommodityBuilder {
-        private CommodityBuilderImpl() {}
+        CommodityBuilderImpl() {}
 
         /**
          * Объект, инициализация которого выполняется в CommodityBuilderImpl
@@ -102,15 +102,5 @@ class CommodityImpl implements Commodity {
     @Override
     public int getResidue() {
         return residue;
-    }
-
-    /**
-     * Возвращает "Строитель", с помощью которого можно
-     * создавать экземпляры типа {@link Commodity}.
-     *
-     * @return экземпляр типа {@link CommodityBuilder}
-     */
-    static CommodityBuilder builder() {
-        return new CommodityBuilderImpl();
     }
 }
