@@ -5,6 +5,8 @@ import ru.avalon.java.dev.ocpjp.labs.core.io.RandomFileReader;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Абстрактное представление о товаре.
@@ -108,16 +110,7 @@ public interface Commodity {
      * @return экземпляр типа {@link CommodityBuilder}
      */
     static CommodityBuilder builder() {
-        /*
-         * TODO(Студент): Реализовать метод 'builder()' типа 'Commodity'
-         * В рамках задачи потребуется создать реализацию
-         * интерфейса CommodityBuilder, что в свою очередь
-         * потребует создания реализации для интерфейса Commodity.
-         *
-         * Созданные реализации случше всего инкапсулировать
-         * на уровне пакета.
-         */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return new CommodityImpl.CommodityBuilderImpl();
     }
 
     /**
@@ -129,14 +122,11 @@ public interface Commodity {
      * @return коллекцию экземпляров {@link Commodity}
      * @throws IOException в случае ошибки ввода-вывода
      */
-    static Collection<Commodity> random(int limit) throws IOException {
+    static Collection<Commodity> random(int limit) throws IOException, NullPointerException {
         try (RandomFileReader reader = RandomFileReader.fromSystemResource("resources/household.csv")) {
-            /*
-             * TODO(Студент): Реализовать создание случайных объектов типа 'Commodity'
-             * 1. Для создания коллекции следует использовать метод 'generate()' класса 'Stream'
-             * 2. Для получения коллекции следует использовать метод 'collect()' класса 'Stream'
-             */
-            throw new UnsupportedOperationException("Not implemented yet!");
+            Stream<String> stringStream = Stream.generate(reader::readLine).limit(limit);
+            Stream<Commodity> commodityStream = stringStream.map(Commodity::valueOf);
+            return commodityStream.collect(Collectors.toSet());
         }
     }
 
@@ -145,14 +135,22 @@ public interface Commodity {
      * из строки.
      *
      * @param string строка, содержащая данные о товаре
-     * @return экземпляр типа {@link Commodity}
+     * @return экземпляр типа {@link Commodity} или null, если строка
+     * не может быть преобразована в экземпляр типа {@link Commodity}
      */
     static Commodity valueOf(String string) {
-        /*
-         * TODO(Студент): реализовать метод 'parse()' класса 'Commodity'
-         * Реализация метода должна быть основана на формате
-         * файла 'resources/household.csv'.
-         */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String[] arr = string.split(";");
+        try {
+            return Commodity.builder()
+                    .code(arr[0])
+                    .vendorCode(arr[1])
+                    .name(arr[2])
+                    .residue(Integer.valueOf(arr[3]))
+                    .price(Double.valueOf(arr[4]))
+                    .build();
+        } catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.err.println("Exception: " + e.getClass() + " (for string: \"" + string + "\"");
+            return null; // правильно ли возвращать здесь null?
+        }
     }
 }
