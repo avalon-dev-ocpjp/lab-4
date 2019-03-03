@@ -103,4 +103,13 @@ class CommodityImpl implements Commodity {
     public int getResidue() {
         return residue;
     }
+
+    @Override
+    public String toString() {
+        return "code='" + code + '\'' +
+                ", vendorCode='" + vendorCode + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", residue=" + residue;
+    }
 }

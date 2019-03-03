@@ -122,7 +122,7 @@ public interface Commodity {
      * @return коллекцию экземпляров {@link Commodity}
      * @throws IOException в случае ошибки ввода-вывода
      */
-    static Collection<Commodity> random(int limit) throws IOException {
+    static Collection<Commodity> random(int limit) throws IOException, NullPointerException {
         try (RandomFileReader reader = RandomFileReader.fromSystemResource("resources/household.csv")) {
             Stream<String> stringStream = Stream.generate(reader::readLine).limit(limit);
             Stream<Commodity> commodityStream = stringStream.map(Commodity::valueOf);
@@ -149,8 +149,8 @@ public interface Commodity {
                     .price(Double.valueOf(arr[4]))
                     .build();
         } catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace(System.err);
-            return null;
+            System.err.println("Exception: " + e.getClass() + " (for string: \"" + string + "\"");
+            return null; // правильно ли возвращать здесь null?
         }
     }
 }
